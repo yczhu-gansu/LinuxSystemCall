@@ -1,29 +1,4 @@
-# Chapter 43. Interprocess Communication Overview
-
-The facilities that processes and threads can use to communicate with one
-another and to synchronize to their actions.
-
-## 43.1. A Taxonomy of IPC Facilities
-Unix communication and synchronization facilities can be divided into three
-broad functional categories:
-1. *Communication*: Concerned with exchanging data between processes.
-2. *Synchronization*: Concerned with synchronizing the actions of processes or
-   threads.
-3. *Signals*: Although signals are intended primarily for other purposes, they
-   can be used as a synchronization technique: the signal number itself is a form
-   of information, and realtime signals can be accompanied by associated data (an
-   integer or a pointer).
-
-Although some of these facilities are concerned with synchronization, the
-general *interprocess communication* (IPC) is often used to describe them all.
-
-Why several facilities provide similar IPC functionality?
-1. Similar facilities evolved on different UNIX variants, and later came to be
-   ported to other UNIX systems. 
-2. New facilities have been developed to address design deficiencies in similar
-   earlia facilities.
-
-## 43.2 Communication Facilities
+# 43.2 Communication Facilities
 Allow processes to exchange data with one another. (These facilities can also be
 used to exchange data between the threads of a single process, but this is
 seldom necessary, since threads can exchange information via shared global
@@ -42,7 +17,7 @@ Break the communication facilities into two categories:
    same pages of RAM.) A process can make data available to other processes by
    placing it in the shared memory region.
 
-### Data transfer
+## Data transfer
 Further break data-transfer facilities into the following subcategories:
 1. *Byte stream*: The data exchanged via pipes, FIFOs, and datagram sockets is
    an undelimited byte stream. Each read operation may read an arbitrary number
@@ -70,4 +45,15 @@ A few general features distinguish data-transfer facilities from shared memory:
    has no data, then (by default) the read operation will block until some
    process writes data to the facility.
 
-### Shared memory
+## Shared memory
+Most modern UNIX systems provide three flavors of shared memory:
+* System V shared memory;
+* POSIX shared memory;
+* memory mapping.
+
+Note the following general points about shared memory:
+1. Although shared memory provides fast communication, this speed advantage is
+   offset by the need to synchronize operations on the shared memory. A
+   semaphore is the usual synchronization method used with shared memory.
+2. Data placed in shared memory is visible to all of the processes that share
+   that memory.
