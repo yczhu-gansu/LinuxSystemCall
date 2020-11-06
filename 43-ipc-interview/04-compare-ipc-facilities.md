@@ -7,9 +7,7 @@ type of handle to refer to the open object.
 
 Identifiers and handles for various types of IPC facilities
 
-| **Facility type** | **Name used to identify object** | **Handle used to refer to
-object in programs** |
+| **Facility type** | **Name used to identify object** | **Handle used to refer to object in programs** |
 | --- | --- | --- |
 | Pipe/FIFO | no name/pathname | file descriptor/file descriptor |
-| UNIX domain socket/Internet domain socket | pathname/IP address + port number
-| file descriptor/file descriptor|
+| UNIX domain socket/Internet domain socket | pathname/IP address + port number | file descriptor/file descriptor|
