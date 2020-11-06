@@ -22,5 +22,13 @@ UNIX systems provide the following synchronization facilities:
    shared resource would employ a semaphore whos maximum values equals the
    number of shared resources. Linux provides both System V semaphores and POSIX
    semaphores, which have essentially similar functionality.
-2. *File locks*:
-3. *Mutexes and condition variables*:
+2. *File locks*: Are a synchronization method explicitly designed to coordinate
+   the actions of multiple processes operating on the same file. They can also
+   be used to coordinate access to other shared resources. File locks come into
+   two flavors: read (shared) locks and write (execlusive) locks. Linux provides
+   file-locking facilities via the *flock()* and *fcntl()* system calls.
+3. *Mutexes and condition variables*: These synchronization facilities are
+   normally used with POSIX threads.
+>Some UNIX implementations, including Linux systems with glibc that provides the
+>NPTL threading implementation, also allow mutexes and condition variables to be
+>shared between processes.
