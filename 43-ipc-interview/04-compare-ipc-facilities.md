@@ -9,5 +9,6 @@ Identifiers and handles for various types of IPC facilities
 
 | **Facility type** | **Name used to identify object** | **Handle used to refer to object in programs** |
 | --- | --- | --- |
-| Pipe/FIFO | no name/pathname | file descriptor/file descriptor |
-| UNIX domain socket/Internet domain socket | pathname/IP address + port number | file descriptor/file descriptor|
+| Pipe<br />FIFO | no name<br />pathname | file descriptor<br/>file descriptor |
+| UNIX domain socket<br />Internet domain socket | pathname<br />IP address + port number | file descriptor<br />file descriptor|
+|System V message queue<br />System V semaphore<br />System V shared memory | System V IPC key<br />System V IPC key<br />System V IPC key<br /> | System V identifier <br />System V identifier <br />System V identifier|
