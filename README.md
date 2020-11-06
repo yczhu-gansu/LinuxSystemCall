@@ -11,3 +11,4 @@ another and to synchronize to their actions.
 
 [3. Synchronization Facilities](./43-ipc-interview/03-synchronize.md)
 
+[4. Comparing IPC Facilities](./43-ipc-interview/04-compare-ipc-facilities.md)
