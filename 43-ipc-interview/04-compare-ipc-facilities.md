@@ -6,6 +6,7 @@ the object, and once the object has been "opened," the process must use some
 type of handle to refer to the open object.
 
 Identifiers and handles for various types of IPC facilities
+
 | **Facility type** | **Name used to identify object** | **Handle used to refer to
 object in programs** |
 | --- | --- | --- |
