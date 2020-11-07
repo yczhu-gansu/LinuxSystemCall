@@ -59,3 +59,35 @@ worth noting:
    access the file.
 6. UDP (Internet domain datagram) sockets allow a sender to broadcast or
    multicast a message to multiple recipients.
+
+With respect to process-synchronization facilities, the following points are
+worth noting:
+1. Record locks placed using *fcntl()* are considered to be owned by the process
+   placing the lock. The kernel uses this ownership property to detect deadlocks
+   (situations where two or more processes are holding locks that block each
+   other's further lock requests). If a deadlock situation occurs, the kernel
+   denies the lock request of one of the processes, returning an error from the
+   *fcntl()* call to indicate that a deadlock occured. System V and POSIX
+   semaphores don't have an ownership property; no deadlock detection occurs for
+   semaphores.
+2. Record locks placed using *fcntl()* are automatically released when the
+   process that owns the locks termiantes. System V semaphores provide a similar
+   feature in the form of an "undo" feature, but this feature is not reliable in
+   all circumstances. POSIX semaphores don't provide an analog of this feature.
+
+## Network communication
+Of all the IPC methods, only sockets permit processes to communicate over a
+network. Sockets are generally used in one of two domains: the UNIX domain,
+which allows communication between processes on the same system, and the
+Internet domain, which allows communication between processes on different hosts
+connected via a TCP/IP network.
+
+## Portability
+The POSIX IPC facilities (message queues, semaphores, and shared memory) are not
+quite as widely available as their System V IPC counterparts, especially on
+older UNIX systems. (An implementation of POSIX message queues and full support
+for POSIX semaphores have appeared on Linux only in the 2.6.x kernel series).
+Therefore, from a portability point of view, System IPC may be preferable to
+POSIX IPC.
+
+## System V IPC design issues
