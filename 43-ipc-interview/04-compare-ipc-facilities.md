@@ -91,3 +91,44 @@ Therefore, from a portability point of view, System IPC may be preferable to
 POSIX IPC.
 
 ## System V IPC design issues
+The System V IPC facilities were designed independently of the traditional UNIX
+I/O model, so their programming interfaces complicated to use. The corresponding
+POSIX IPC facilities were designed to address these problems:
+1. The System V IPC facilities are connectionless. Namely no notion of handle
+   (like a file descriptor) refering to an open IPC object. So:
+   * The kernel does not record the process as having "opened" the object
+     (unlike other types of IPC objects). 
+   * The kernel can't maintain a reference count of the number of processes that
+2. Traditional UNIX I/O model integer key values and IPC identifiers instead of
+   pathnames and file descriptors (used for System V IPC facilities?). The
+   programming interfaces are also overly complex.
+
+The kernel counts open references for POSIX IPC objects. This simplifies
+desicions about when an object can be deleted.
+
+POSIX facilities provide an interface that is simpler and more consistant with
+the traditional UNIX model.
+
+## Accessiblity
+The permissions scheme that governs which process can access the object.
+1. Determined according to the associated file permissions mask. (FIFOs and
+   sockets, object names live in the file systems)
+   Although System V IPC objects have an associated permissions mask whose
+   semantics are similar to those for files.
+2. Accessible only by related (related via *fork()*) processes. One process
+   create the object and then call *fork()*, the child process inherits a handle
+   referring to the object, allowing both process to share the object.
+3. By the accessibility of the shared memory region containing the semaphore.
+   (POSIX unnamed semaphore)
+4. Must have permission to open the file (place a lock on a file).
+5. There are no restrictions on accessing an Internet domain socket.
+
+Table. Accessiblity and persistence for various types of IPC facilities
+| **Facility type** | **Accessiblity** | **Persistence** |
+| --- | --- | --- |
+|Pipe<br>FIFO | Only by related processes<br>permissions mask | process<br>process |
+|UNIX domain socket<br>Internet domain socket| permissions mask<br>by any process| process<br>process |
+|System V message queue<br>System V semaphore<br>System V shared memory |permissions mask<br>permissions mask<br>permissions mask | kernel<br>kernel<br>kernel|
+|POSIX message queue<br>POSIX named semaphore<br>POSIX unnamed semaphore<br>POSIX shared memory |permissions mask<br>permissions mask<br>permissions of underlying memory<br>permissions mask | kernel<br>kernel<br>depends<br>kernel|
+|Anonymous mapping<br>Memory-mapped file| Only by related processes<br>permissions mask | process<br>file system|
+|flock() file lock<br>fcntl() file lock| open() of file<br>open() of file| process<br>process |
